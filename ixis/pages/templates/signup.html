@@ -1,0 +1,211 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>iXiS Web | Sign Up</title>
+    <!-- plugins:css -->
+    <!-- <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css"> -->
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    <!-- <link rel="stylesheet" href="assets/css/style2.css"> -->
+    <style type="text/css">
+        p.input-container {
+            width: 100%;
+            position: relative;
+            top: 50px;
+            margin-bottom: 25px;
+        }
+        label {
+            color: #CCC;
+            position: absolute;
+            cursor: text;
+            transform: translateY(-25px);
+            transition: transform 0.3s ease;
+            left: 0;
+            bottom: -15px;
+        }
+        input {
+           width: 100%;
+           height: 40px;
+           font-size: 16px;
+           transition: 0.6s;
+           border: none;
+           border-bottom: 1px solid #CCC;
+           background-color: transparent;
+       }
+       input:focus {
+           outline: none;
+           border-bottom: 1px solid #dbd8e3;
+       }
+       .animation label {
+           transform: translateY(-55px);
+           font-size: 10px;
+           text-transform: uppercase;
+           font-weight: 600;
+       }
+       .animation-color label {
+           color: #dbd8e3;
+       }
+
+       .next-arrow {
+           cursor: pointer;
+           position: relative;
+           display: block;
+           margin: 100px 0 0 100px;
+           width: 100px;
+           height: 100px;
+           border: solid 6px #999;
+           border-radius: 100%;
+           z-index: 1;
+           transition: all 0.2s linear;
+       }
+       .next-arrow:before, .next-arrow:after {
+           content: "";
+           position: absolute;
+           width: 35%;
+           height: 10%;
+           top: 41%;
+           left: 55%;
+           background: #999;
+           z-index: 2;
+           transform: translate(-50%, -50%) rotate(45deg);
+           transition: all 0.2s linear;
+       }
+       .next-arrow:after {
+           z-index: 3;
+           top: 59%;
+           left: 55%;
+           transform: translate(-50%, -50%) rotate(-45deg);
+       }
+       .next-arrow:hover {
+           border: solid 8px #777;
+       }
+       .next-arrow:hover:after, .next-arrow:hover:before {
+           background: #777;
+       }
+       .next-arrow:active {
+           border: solid 8px #111;
+       }
+       .next-arrow:active:after, .next-arrow:active:before {
+           background: #111;
+       }
+   </style>
+   <!-- End layout styles  -->
+   <link rel="shortcut icon" href="{% static 'assets/images/isis.png' %}" />
+</head>
+
+<body>
+    <div class="container-scroller">
+        <div class="container-fluid page-body-wrapper full-page-wrapper">
+            <div class="row w-100 m-0">
+                <div class="content-wrapper full-page-wrapper d-flex align-items-center bg-dark">
+                    <div class="w-100 h-100 row">
+                        <div class="col-6">
+                            <center>
+                                <div style="" class="mt-5">
+                                    <center>
+                                        <img width="400" height="400" class="rounded-circle" src="{% static 'assets/images/ISIS_white.png' %}">                                        
+                                    </center>
+                                </div><br>
+                            </center>
+                            
+                        </div>
+                        <div class="col-6 h-100">
+                            <div class="card col-lg-10 ml-0 mt-5" style="opacity: .9;">
+                                <div class="card-body px-4 py-4">
+                                    <h3 class="card-title text-left">Sign Up</h3>
+                                    <form class="mt-2">
+                                        <p class="input-container">
+                                            <input type="text" id="input-username" class="login-input">
+                                            <label for="input-username" unselectable="on">Username</label>
+                                        </p>
+                                        <!-- <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Code</button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" href="#">+1</a>
+                                                        <a class="dropdown-item" href="#">+2</a>
+                                                        <a class="dropdown-item" href="#">+13</a>
+                                                        <div role="separator" class="dropdown-divider"></div>
+                                                        <a class="dropdown-item" href="#">+125</a>
+                                                    </div>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="phone number" aria-label="Text input with dropdown button">
+                                            </div>
+                                        </div> -->
+                                        <p class="input-container">
+                                            <input type="password" id="input-password" class="login-input">
+                                            <label for="input-password" unselectable="on">Password</label>
+                                        </p>
+                                        <p class="input-container">
+                                            <input type="password" id="c-input-password" class="login-input">
+                                            <label for="c-input-password" unselectable="on">Confirm Password</label>
+                                        </p>
+                                        <div class="d-flex mt-5">
+                                            <button class="btn btn-dark enter-btn mr-2 col mt-5">Sign Up</button>
+                                            <button class="btn btn-dark btn-cncl mr-2 col mt-5">Cancel</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- content-wrapper ends -->
+            </div>
+            <!-- row ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="{% static 'assets/vendors/js/vendor.bundle.base.js' %}"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="{% static 'assets/js/off-canvas.js' %}"></script>
+    <script src="{% static 'assets/js/hoverable-collapse.js' %}"></script>
+    <script src="{% static 'assets/js/misc.js' %}"></script>
+    <script src="{% static 'assets/js/settings.js' %}"></script>
+    <script src="{% static 'assets/js/todolist.js' %}"></script>
+    <!-- endinject -->
+
+     <script type="text/javascript">
+        //Load animation if fields containing data on page load
+        $( document ).ready(function() {
+          $(".input-login").each(function() { 
+            if ($(this).val() != "") {
+              $(this).parent().addClass("animation");
+          }
+      });
+      });
+
+//Add animation when input is focused
+        $(".login-input").focus(function(){
+          $(this).parent().addClass("animation animation-color");
+      });
+
+//Remove animation(s) when input is no longer focused
+        $(".login-input").focusout(function(){
+          if($(this).val() === "")
+            $(this).parent().removeClass("animation");
+        $(this).parent().removeClass("animation-color");
+    })
+</script>
+</body>
+
+</html>

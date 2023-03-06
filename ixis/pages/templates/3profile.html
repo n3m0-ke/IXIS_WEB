@@ -1,0 +1,943 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>IXIS | User Profile</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="{% static 'assets/vendors/mdi/css/materialdesignicons.min.css'%}">
+    <link rel="stylesheet" href="{% static 'assets/vendors/css/vendor.bundle.base.css' %}">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="{% static 'assets/vendors/jvectormap/jquery-jvectormap.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendors/flag-icon-css/css/flag-icon.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendors/owl-carousel-2/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendors/owl-carousel-2/owl.theme.default.min.css' %}">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <style type="text/css">
+        .detail-bg {
+            border-radius: 10px;
+            padding: 9px;
+            background-color: black;
+            opacity: 0.8;
+        }
+        
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+        .upload-files-container {
+            background-color: #000;
+            width: 100%;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 10px 20px, rgba(0, 0, 0, 0.28) 0px 6px 6px;
+        }
+        
+        .drag-file-area {
+            border: 2px dashed grey;
+            border-radius: 40px;
+            /* margin: 10px 0 15px;
+            padding: 30px 50px; */
+            width: 100%;
+            text-align: center;
+        }
+        
+        .drag-file-area .upload-icon {
+            font-size: 50px;
+        }
+        
+        .drag-file-area h3 {
+            font-size: 26px;
+            /* margin: 15px 0; */
+        }
+        
+        .drag-file-area label {
+            font-size: 19px;
+        }
+        
+        .drag-file-area label .browse-files-text {
+            color: #7b2cbf;
+            font-weight: bolder;
+            cursor: pointer;
+        }
+        
+        .browse-files span {
+            /* position: relative; */
+            /* top: -25px; */
+        }
+        
+        .default-file-input {
+            opacity: 0;
+        }
+        
+        .cannot-upload-message {
+            background-color: #ffc6c4;
+            font-size: 17px;
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+            padding: 5px 10px 5px 30px;
+            border-radius: 5px;
+            color: #BB0000;
+            display: none;
+        }
+        
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+        
+        .cannot-upload-message span,
+        .upload-button-icon {
+            padding-right: 10px;
+        }
+        
+        .cannot-upload-message span:last-child {
+            padding-left: 20px;
+            cursor: pointer;
+        }
+        
+        .file-block {
+            color: black;
+            background-color: #7b2cbf;
+            transition: all 1s;
+            width: 390px;
+            position: relative;
+            display: none;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0 15px;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+        }
+        
+        .file-info {
+            display: flex;
+            align-items: center;
+            font-size: 15px;
+        }
+        
+        .file-icon {
+            margin-right: 10px;
+        }
+        
+        .file-name,
+        .file-size {
+            padding: 0 3px;
+        }
+        
+        .remove-file-icon {
+            cursor: pointer;
+        }
+        
+        .progress-bar {
+            display: flex;
+            position: absolute;
+            bottom: 0;
+            left: 4.5%;
+            width: 0;
+            height: 5px;
+            border-radius: 25px;
+            background-color: #4BB543;
+        }
+        /* Make circles that indicate the steps of the form: */
+        
+        .form-tab {
+            display: none;
+        }
+        
+        .step {
+            height: 15px;
+            width: 15px;
+            margin: 0 2px;
+            background-color: #bbbbbb;
+            border: none;
+            border-radius: 50%;
+            display: inline-block;
+            opacity: 0.5;
+        }
+        /* Mark the active step: */
+        
+        .step.active {
+            opacity: 1;
+        }
+        /* Mark the steps that are finished and valid: */
+        
+        .step.finish {
+            background-color: #04AA6D;
+        }
+    </style>
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/style2.css' %}">
+    <!-- End layout styles -->
+    <link rel="shortcut icon" href="{% static 'assets/images/isis.png' %}" />
+</head>
+
+<body>
+    <div class="container-scroller">
+        <!-- partial:partials/_sidebar.html -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar" style="
+        background-color: black;">
+        <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top" style="background-color: black;">
+            <a class="sidebar-brand brand-logo" href="index.html"><img src="{% static 'assets/images/logo.svg' %}" alt="logo" /></a>
+            <a class="sidebar-brand brand-logo-mini" href="index.html"><img src="{% static 'assets/images/logo-mini.svg' %}" alt="logo" /></a>
+        </div>
+        <ul class="nav">
+            <li class="nav-item nav-category mt-4 h3">
+                <span class="nav-link text-white">Pages</span>
+            </li>
+            <li class="nav-item menu-items">
+                <a class="nav-link" href="{% url 'origin' %}">
+                    <span class="menu-icon">
+                      <i class="mdi mdi-home text-light"></i>
+                    </span>
+                    <span class="menu-title">Origin Point</span>
+                </a>
+            </li>
+            <li class="nav-item menu-items">
+                <a class="nav-link" href="{% url 'feed' %}">
+                    <span class="menu-icon">
+                      <i class="mdi mdi-map text-light"></i>
+                    </span>
+                    <span class="menu-title">Feed</span>
+                </a>
+            </li>
+            <li class="nav-item menu-items">
+                <a class="nav-link" href="{% url 'profile1' %}">
+                    <span class="menu-icon">
+                      <i class="mdi mdi-map text-light"></i>
+                    </span>
+                    <span class="menu-title">1st Profile View</span>
+                </a>
+            </li>
+            <li class="nav-item menu-items active">
+                <a class="nav-link" href="{% url 'profile3' %}">
+                    <span class="menu-icon">
+                      <i class="mdi mdi-backspace text-light"></i>
+                    </span>
+                    <span class="menu-title">3rd Profile View</span>
+                </a>
+            </li>
+
+
+  <hr style="color: green;">
+
+  <li class="nav-item nav-category">
+    <span class="nav-link text-white">Other Pages</span>
+</li>
+<li class="nav-item menu-items">
+    <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
+        <span class="menu-icon">
+          <i class="mdi mdi-account"></i>
+      </span>
+      <span class="menu-title">Commons</span>
+      <i class="menu-arrow"></i>
+  </a>
+  <div class="collapse" id="auth">
+    <ul class="nav flex-column sub-menu">
+        <li class="nav-item"> <a class="nav-link" href="{% url 'Err404_view' %}" target="_blank"> 404 </a></li>
+        <li class="nav-item"> <a class="nav-link" href="{% url 'Err500_view' %}" target="_blank"> 500 </a></li>
+        <li class="nav-item"> <a class="nav-link" href="{% url 'signin' %}" target="_blank"> Sign In </a></li>
+        <li class="nav-item"> <a class="nav-link" href="{% url 'signup' %}" target="_blank"> Sign Up </a></li>
+    </ul>
+</div>
+</li>
+<li class="nav-item menu-items">
+    <a class="nav-link" href="http://www.bootstrapdash.com/demo/corona-free/jquery/documentation/documentation.html">
+        <span class="menu-icon">
+          <i class="mdi mdi-logout"></i>
+      </span>
+      <span class="menu-title">Logout</span>
+  </a>
+</li>
+</ul>
+</nav>
+<!-- partial -->
+<div class="container-fluid page-body-wrapper">
+    <!-- partial:partials/_navbar.html -->
+    <nav class="navbar p-0 fixed-top d-flex flex-row">
+        <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
+            <a class="navbar-brand brand-logo-mini" href="index.html">
+                <!-- <img src="assets/images/logo-mini.svg" alt="logo" /> -->
+            </a>
+        </div>
+        <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
+            <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                <span class="mdi mdi-menu"></span>
+            </button>
+            <ul class="navbar-nav w-100">
+                <li class="nav-item w-100">
+                    <form class="nav-link mt-2 mt-md-0 d-none d-lg-flex search">
+                        <input type="text" class="form-control text-light" placeholder="Search products">
+                    </form>
+                </li>
+            </ul>
+            <ul class="navbar-nav navbar-nav-right">
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
+                        <div class="navbar-profile">
+                            <img class="img-xs rounded-circle" src="{% static 'assets/images/faces/face15.jpg' %}" alt="">
+                            <p class="mb-0 d-none d-sm-block navbar-profile-name">Henry Klein</p>
+                            <i class="mdi mdi-menu-down d-none d-sm-block"></i>
+                        </div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="profileDropdown">
+                        <h6 class="p-3 mb-0">Profile</h6>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item preview-item">
+                            <div class="preview-thumbnail">
+                                <div class="preview-icon bg-dark rounded-circle">
+                                    <i class="mdi mdi-settings text-success"></i>
+                                </div>
+                            </div>
+                            <div class="preview-item-content">
+                                <p class="preview-subject mb-1">Settings</p>
+                            </div>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item preview-item">
+                            <div class="preview-thumbnail">
+                                <div class="preview-icon bg-dark rounded-circle">
+                                    <i class="mdi mdi-logout text-danger"></i>
+                                </div>
+                            </div>
+                            <div class="preview-item-content">
+                                <p class="preview-subject mb-1">Log out</p>
+                            </div>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <p class="p-3 mb-0 text-center">Advanced settings</p>
+                    </div>
+                </li>
+            </ul>
+            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                <span class="mdi mdi-format-line-spacing"></span>
+            </button>
+        </div>
+    </nav>
+    <!-- partial -->
+    <div class="main-panel">
+        <div class="content-wrapper">
+            <div class="row" style="border: white 1px solid;">
+
+                <!-- Middle Section -->
+                <div class="col-md-7 p-2" style="border: white 1px solid;">
+
+                    <!-- What's on your mind? -->
+                    <div class="container w-100 p-2" style="border: white 1px solid;">
+                        <div class="row w-100 mx-auto">
+                            <div class="col-2">
+                                <img class="img-fluid" src="{% static 'assets/images/avatars/default.png' %}">
+                            </div>
+                            <div class="col-9" style="min-height:60px;">
+                                <div class="row h-100">
+                                    <div class="col-8 h-100  d-flex align-items-center">
+                                        <h4 class="display-4">FName LName</h4>
+                                    </div>
+                                    <div class="col-4 d-flex align-items-center justify-content-start">
+                                        <button class="btn btn-dark w-100 h-75" style="min-width: 45%;"> Follow</button>
+                                    </div>
+                                    
+                                </div>                         
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-12 mx-auto">
+                                <div class="w-100 row justify-content-center align-self-center mx-auto">
+                                    <textarea class="w-100" rows="3" placeholder="">Be-line -> Ideal version of future self</textarea>
+                                </div>                               
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container mt-3">
+                        <div class="w-100 d-flex justify-content-around">
+                            <button class="btn btn-dark" onclick="openTab('rants-mdi', 'Rants')">
+                                Rants <i class="mdi mdi-checkbox-blank tablink" id="rants-mdi"></i>
+                            </button>
+                            <button class="btn btn-dark" onclick="openTab('dJournals-mdi', 'dJournals')">
+                                Daily Journals <i class="mdi mdi-checkbox-blank-outline tablink" id="dJournals-mdi"></i>
+                            </button>
+                            <button class="btn btn-dark" onclick="openTab('bJournals-mdi', 'bJournals')">
+                                Book Journals <i class="mdi mdi-checkbox-blank-outline tablink" id="bJournals-mdi"></i>
+                            </button>
+                        </div>                        
+                    </div>
+
+                    <!-- Rants -->
+                    <div class="container p-0 mt-3 tab" style="border: white 1px solid;" id="Rants">
+                        <div class="w-100 mx-0 py-2" style="border: white 1px solid;">
+                            <button class="btn btn-light mx-2" id="Rants">
+                                Rants
+                            </button>
+                            <button class="btn btn-dark" id="dJournals">
+                                Shared
+                            </button>
+                        </div>
+                        <div class="row w-100 p-3 h-25">
+                            <div class="col-2">
+                                <img class="img-fluid" src="{% static 'assets/images/avatars/default.png' %}">
+                            </div>
+                            <div class="col-9 mx-auto">
+                                <div class="w-100 row justify-content-center align-self-center">
+                                    <textarea class="w-100" rows="3" placeholder="">Be-line -> Ideal version of future self</textarea>
+                                </div>                        
+                            </div>
+                        </div>
+                        <div class="w-100 d-flex justify-content-around">
+                            <button class="btn btn-dark w-25"><i class="mdi mdi-cards-diamond"></i>GEM (like)</button>
+                            <button class="btn btn-dark w-25">Comment</button>
+                            <button class="btn btn-dark w-25"><i class="mdi mdi-arrow-right"></i>Share</button>
+                        </div>
+                        <div class="w-100 d-flex justify-content-end mt-5 pr-4">
+                            <i class="mdi mdi-plus-circle-outline" style="font-size: 45px; cursor: pointer;"></i>
+                        </div>
+                    </div>
+
+                    <!-- Daily Journals -->
+                    <div class="container p-0 mt-3 d-none tab" style="border: white 1px solid;" id="dJournals">
+                        Daily Journals
+
+                        <div class="mx-1 my-2 bg-danger" style="border: white 1px solid; min-height: 40px;">
+                           <h3 class="page-title">Day, Date </h3> 
+                       </div>
+                       <div class="mx-1 my-2 bg-success" style="border: white 1px solid; min-height: 40px;">
+                       </div>
+                       <div class="mx-1 my-2 bg-success" style="border: white 1px solid; min-height: 40px;">
+                       </div>
+                   </div>
+
+
+                   <!-- Book Journals -->
+                   <div class="container p-1 mt-3 d-none tab" style="border: white 1px solid;" id="bJournals">
+                    <div class="w-100 p-2">
+                        Book Notes    
+                    </div>
+
+                    <div class="row w-100 p-2 h-25 mx-auto my-1" style="border: white 1px solid;">
+                        <div class="col-md-4">
+                            <img class="img-fluid" src="{% static 'assets/images/novel1.jpeg' %}">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="mx-0 my-0 h-50 d-flex">
+                                <div class="row justify-content-center align-self-center">
+                                    <h4 class="display-4">Book Name</h4>
+                                </div>
+                            </div>
+                            <div class="mx-0 my-0 h-50 d-flex">
+                                <div class="row justify-content-center align-self-center">
+                                    Insights added:<br>
+                                    Last Modified:
+                                </div>
+                            </div>                                
+                        </div>
+                    </div>
+
+                    <div class="row w-100 p-2 h-25 mx-auto my-1" style="border: white 1px solid;">
+                        <div class="col-md-4">
+                            <img class="img-fluid" src="{% static 'assets/images/novel2.jpeg' %}">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="mx-0 my-0 h-50 d-flex">
+                                <div class="row justify-content-center align-self-center">
+                                    <h4 class="display-4">Book Name</h4>
+                                </div>
+                            </div>
+                            <div class="mx-0 my-0 h-50 d-flex">
+                                <div class="row justify-content-center align-self-center">
+                                    Insights added:<br>
+                                    Last Modified:
+                                </div>
+                            </div>                                
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Your Game -->
+            <div class="col-md-5">
+                <h4 class="display-4">Their Game</h4>
+
+                <!-- game graph -->
+                <div class="container-fluid mt-4 mb-0"  style="border: white 1px solid;">
+                    The game graph
+                </div>
+                <div class="container-fluid mt-0 mb-3"  style="border: white 1px solid;">
+                    The game graph
+                </div>
+
+                <div class="w-100 d-flex justify-content-around">
+                    <button class="btn btn-dark" data-toggle="modal" data-target="#bodyModal">Body</button>
+                    
+                    <!-- Body Modal -->
+                    <div class="modal fade" id="bodyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" style="right:0;">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="text-white" aria-hidden="true">&times;</span></button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <div class="upload-files-container">
+                                        <h4 class="card-title">Chart placeholder</h4>
+                                        <canvas id="pieChart" style="height:250px"></canvas>
+                                    </div>
+
+                                    Endurance
+                                    <div class="w-100 d-flex flex-row mb-3" style="border: white 1px solid;">
+                                        <div class="mx-0 my-0 bg-white" style="min-height: 20px; width: 60%;">
+
+                                        </div>
+                                        <div class="mx-0 my-0 bg-success" style="min-height: 20px; width: 10%;">
+
+                                        </div>
+                                        <div class="mx-0 my-0" style="min-height: 20px; width: ;">
+                                            +10
+                                        </div>
+                                    </div>
+
+                                    Flexibility
+                                    <div class="w-100 d-flex flex-row mb-3" style="border: white 1px solid;">
+                                        <div class="mx-0 my-0 bg-white" style="min-height: 20px; width: 50%;">
+
+                                        </div>
+                                        <div class="mx-0 my-0 bg-danger" style="min-height: 20px; width: 2%;">
+
+                                        </div>
+                                        <div class="mx-0 my-0" style="min-height: 20px; width: ;">
+                                            -2
+                                        </div>
+                                    </div>
+
+                                    Strength
+                                    <div class="w-100 d-flex flex-row mb-3" style="border: white 1px solid;">
+                                        <div class="mx-0 my-0 bg-white" style="min-height: 20px; width: 60%;">
+
+                                        </div>
+                                        <div class="mx-0 my-0 bg-success" style="min-height: 20px; width: 10%;">
+
+                                        </div>
+                                        <div class="mx-0 my-0" style="min-height: 20px; width: ;">
+                                            +10
+                                        </div>
+                                    </div>
+
+                                    Speed
+                                    <div class="w-100 d-flex flex-row mb-3" style="border: white 1px solid;">
+                                        <div class="mx-0 my-0 bg-white" style="min-height: 20px; width: 60%;">
+
+                                        </div>
+                                        <div class="mx-0 my-0 bg-danger" style="min-height: 20px; width: 6%;">
+
+                                        </div>
+                                        <div class="mx-0 my-0" style="min-height: 20px; width: ;">
+                                            -6
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-dark" data-toggle="modal" data-target="#mindModal">Mind</button>
+
+                    <!-- Mind Modal -->
+                    <div class="modal fade" id="mindModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" style="right:0;">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="text-white" aria-hidden="true">&times;</span></button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <div class="upload-files-container">
+                                        <h4 class="card-title">Chart placeholder</h4>
+                                         <canvas id="doughnutChart" style="height:250px"></canvas>
+                                    </div>
+
+                                    Information
+                                    <div class="w-100 d-flex flex-row mb-3" style="border: white 1px solid;">
+                                        <div class="mx-0 my-0 bg-white" style="min-height: 20px; width: 60%;">
+
+                                        </div>
+                                        <div class="mx-0 my-0 bg-success" style="min-height: 20px; width: 10%;">
+
+                                        </div>
+                                        <div class="mx-0 my-0" style="min-height: 20px; width: ;">
+                                            +10
+                                        </div>
+                                    </div>
+
+                                    Comprehension
+                                    <div class="w-100 d-flex flex-row mb-3" style="border: white 1px solid;">
+                                        <div class="mx-0 my-0 bg-white" style="min-height: 20px; width: 50%;">
+
+                                        </div>
+                                        <div class="mx-0 my-0 bg-danger" style="min-height: 20px; width: 2%;">
+
+                                        </div>
+                                        <div class="mx-0 my-0" style="min-height: 20px; width: ;">
+                                            -2
+                                        </div>
+                                    </div>
+
+                                    Perception
+                                    <div class="w-100 d-flex flex-row mb-3" style="border: white 1px solid;">
+                                        <div class="mx-0 my-0 bg-white" style="min-height: 20px; width: 60%;">
+
+                                        </div>
+                                        <div class="mx-0 my-0 bg-success" style="min-height: 20px; width: 10%;">
+
+                                        </div>
+                                        <div class="mx-0 my-0" style="min-height: 20px; width: ;">
+                                            +10
+                                        </div>
+                                    </div>
+
+                                    Attention
+                                    <div class="w-100 d-flex flex-row mb-3" style="border: white 1px solid;">
+                                        <div class="mx-0 my-0 bg-white" style="min-height: 20px; width: 60%;">
+
+                                        </div>
+                                        <div class="mx-0 my-0 bg-danger" style="min-height: 20px; width: 6%;">
+
+                                        </div>
+                                        <div class="mx-0 my-0" style="min-height: 20px; width: ;">
+                                            -6
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-dark" data-toggle="modal" data-target="#soulModal">Soul</button>
+
+                    <!-- Soul Modal -->
+                    <div class="modal fade" id="soulModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" style="right:0;">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="text-white" aria-hidden="true">&times;</span></button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <div class="upload-files-container">
+                                        <h4 class="card-title">Chart placeholder</h4>
+                                        <canvas id="areaChart" style="height:250px"></canvas>
+                                    </div>
+
+                                    Will
+                                    <div class="w-100 d-flex flex-row mb-3" style="border: white 1px solid;">
+                                        <div class="mx-0 my-0 bg-white" style="min-height: 20px; width: 60%;">
+
+                                        </div>
+                                        <div class="mx-0 my-0 bg-success" style="min-height: 20px; width: 4%;">
+
+                                        </div>
+                                        <div class="mx-0 my-0" style="min-height: 20px; width: ;">
+                                            +4
+                                        </div>
+                                    </div>
+
+                                    Emotion
+                                    <div class="w-100 d-flex flex-row mb-3" style="border: white 1px solid;">
+                                        <div class="mx-0 my-0 bg-white" style="min-height: 20px; width: 60%;">
+
+                                        </div>
+                                        <div class="mx-0 my-0 bg-success" style="min-height: 20px; width: 10%;">
+
+                                        </div>
+                                        <div class="mx-0 my-0" style="min-height: 20px; width: ;">
+                                            +10
+                                        </div>
+                                    </div>
+
+                                    Drive
+                                    <div class="w-100 d-flex flex-row mb-3" style="border: white 1px solid;">
+                                        <div class="mx-0 my-0 bg-white" style="min-height: 20px; width: 50%;">
+
+                                        </div>
+                                        <div class="mx-0 my-0 bg-danger" style="min-height: 20px; width: 2%;">
+
+                                        </div>
+                                        <div class="mx-0 my-0" style="min-height: 20px; width: ;">
+                                            -2
+                                        </div>
+                                    </div>
+
+                                    Creativity
+                                    <div class="w-100 d-flex flex-row mb-3" style="border: white 1px solid;">
+                                        <div class="mx-0 my-0 bg-white" style="min-height: 20px; width: 60%;">
+
+                                        </div>
+                                        <div class="mx-0 my-0 bg-success" style="min-height: 20px; width: 10%;">
+
+                                        </div>
+                                        <div class="mx-0 my-0" style="min-height: 20px; width: ;">
+                                            +10
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-dark" data-toggle="modal" data-target="#svvModal">Sins Vs Virtue</button>
+
+                    <!-- Svv Modal -->
+                    <div class="modal fade" id="svvModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" style="right:0;">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="text-white" aria-hidden="true">&times;</span></button>
+                                </div>
+                                <div class="modal-body">
+
+                                    Humility
+                                    <div class="w-100 d-flex flex-row mb-3" style="border: white 1px solid;">
+                                        <div class="mx-0 my-0 bg-white" style="min-height: 20px; width: 60%;">
+
+                                        </div>
+                                        <div class="mx-0 my-0 bg-success" style="min-height: 20px; width: 10%;">
+
+                                        </div>
+                                        <div class="mx-0 my-0" style="min-height: 20px; width: ;">
+                                            +10
+                                        </div>
+                                    </div>
+
+                                    Chastity
+                                    <div class="w-100 d-flex flex-row mb-3" style="border: white 1px solid;">
+                                        <div class="mx-0 my-0 bg-white" style="min-height: 20px; width: 50%;">
+
+                                        </div>
+                                        <div class="mx-0 my-0 bg-danger" style="min-height: 20px; width: 2%;">
+
+                                        </div>
+                                        <div class="mx-0 my-0" style="min-height: 20px; width: ;">
+                                            -2
+                                        </div>
+                                    </div>
+
+                                    Diligence
+                                    <div class="w-100 d-flex flex-row mb-3" style="border: white 1px solid;">
+                                        <div class="mx-0 my-0 bg-white" style="min-height: 20px; width: 60%;">
+
+                                        </div>
+                                        <div class="mx-0 my-0 bg-success" style="min-height: 20px; width: 10%;">
+
+                                        </div>
+                                        <div class="mx-0 my-0" style="min-height: 20px; width: ;">
+                                            +10
+                                        </div>
+                                    </div>
+
+                                    Gratitude
+                                    <div class="w-100 d-flex flex-row mb-3" style="border: white 1px solid;">
+                                        <div class="mx-0 my-0 bg-white" style="min-height: 20px; width: 50%;">
+
+                                        </div>
+                                        <div class="mx-0 my-0 bg-danger" style="min-height: 20px; width: 2%;">
+
+                                        </div>
+                                        <div class="mx-0 my-0" style="min-height: 20px; width: ;">
+                                            -2
+                                        </div>
+                                    </div>
+
+                                    Charity
+                                    <div class="w-100 d-flex flex-row mb-3" style="border: white 1px solid;">
+                                        <div class="mx-0 my-0 bg-white" style="min-height: 20px; width: 60%;">
+
+                                        </div>
+                                        <div class="mx-0 my-0 bg-success" style="min-height: 20px; width: 10%;">
+
+                                        </div>
+                                        <div class="mx-0 my-0" style="min-height: 20px; width: ;">
+                                            +10
+                                        </div>
+                                    </div>
+
+                                    Patience
+                                    <div class="w-100 d-flex flex-row mb-3" style="border: white 1px solid;">
+                                        <div class="mx-0 my-0 bg-white" style="min-height: 20px; width: 60%;">
+
+                                        </div>
+                                        <div class="mx-0 my-0 bg-danger" style="min-height: 20px; width: 6%;">
+
+                                        </div>
+                                        <div class="mx-0 my-0" style="min-height: 20px; width: ;">
+                                            -6
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Chart and stats -->
+                <div class="container mt-3" style="border: white 1px solid;">
+                    <div class="upload-files-container">
+                        <h4 class="card-title">Chart placeholder</h4>
+                        <canvas id="myChart"></canvas>
+                    </div>
+
+                    <div class="container-fluid px-5">
+                        Body<br>
+                        <div class="w-100 d-flex flex-row mb-3" style="border: white 1px solid;">
+                            <div class="mx-0 my-0 bg-white" style="min-height: 20px; width: 60%;">
+
+                            </div>
+                            <div class="mx-0 my-0 bg-success" style="min-height: 20px; width: 10%;">
+
+                            </div>
+                            <div class="mx-0 my-0" style="min-height: 20px; width: ;">
+                                +10
+                            </div>
+                        </div>
+                        Mind<br>
+                        <div class="w-100 d-flex flex-row mb-3" style="border: white 1px solid;">
+                            <div class="mx-0 my-0 bg-white" style="min-height: 20px; width: 60%;">
+
+                            </div>
+                            <div class="mx-0 my-0 bg-danger" style="min-height: 20px; width: 6%;">
+
+                            </div>
+                            <div class="mx-0 my-0" style="min-height: 20px; width: ;">
+                                -6
+                            </div>
+                        </div>
+                        Soul<br>
+                        <div class="w-100 d-flex flex-row mb-3" style="border: white 1px solid;">
+                            <div class="mx-0 my-0 bg-white" style="min-height: 20px; width: 50%;">
+
+                            </div>
+                            <div class="mx-0 my-0 bg-danger" style="min-height: 20px; width: 2%;">
+
+                            </div>
+                            <div class="mx-0 my-0" style="min-height: 20px; width: ;">
+                                -2
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+
+            </div>
+
+
+        </div>
+    </div>
+    <!-- content-wrapper ends -->
+    <!-- partial:partials/_footer.html -->
+
+    <!-- partial -->
+</div>
+<!-- main-panel ends -->
+</div>
+<!-- page-body-wrapper ends -->
+</div>
+<!-- container-scroller -->
+<!-- plugins:js -->
+<script src="{% static 'assets/vendors/js/vendor.bundle.base.js' %}"></script>
+<!-- endinject -->
+<!-- Plugin js for this page -->
+<script src="{% static 'assets/vendors/chart.js/Chart.min.js' %}"></script>
+<script src="{% static 'assets/vendors/progressbar.js/progressbar.min.js' %}"></script>
+<script src="{% static 'assets/vendors/jvectormap/jquery-jvectormap.min.js' %}"></script>
+<script src="{% static 'assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js' %}"></script>
+<script src="{% static 'assets/vendors/owl-carousel-2/owl.carousel.min.js' %}"></script>
+<!-- End plugin js for this page -->
+<!-- inject:js -->
+<script src="{% static 'assets/js/off-canvas.js' %}"></script>
+<script src="{% static 'assets/js/hoverable-collapse.js' %}"></script>
+<script src="{% static 'assets/js/misc.js' %}"></script>
+<script src="{% static 'assets/js/settings.js' %}"></script>
+<script src="{% static 'assets/js/todolist.js' %}"></script>
+<!-- endinject -->
+<!-- Custom js for this page -->
+<script src="{% static 'assets/js/dashboard.js' %}"></script>
+<script src="{% static 'assets/js/chart.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.1.1/chart.min.js" integrity="sha512-MC1YbhseV2uYKljGJb7icPOjzF2k6mihfApPyPhEAo3NsLUW0bpgtL4xYWK1B+1OuSrUkfOTfhxrRKCz/Jp3rQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+<script>
+    const ctx = document.getElementById('myChart');
+
+    const data = {
+        labels: [
+            'Soul',
+            '',
+            'Body',
+            '',
+            'Mind',
+            ''
+            ],
+        datasets: [{
+            label: 'My Data',
+            data: [65, 0, 59, 0, 70, 0],
+            fill: true,
+            backgroundColor: [
+                'rgb(255, 99, 132)',
+                'rgb(75, 192, 192)',
+                'rgb(75, 192, 192)',
+                'rgb(255, 205, 86)',
+                'rgb(201, 203, 207)',
+                'rgb(54, 162, 235)'
+                ]
+        }]
+    };
+
+    new Chart(ctx, {
+        type: 'polarArea',
+        data: data,
+        options: {},
+    });
+</script>
+<script>
+    function openTab(link, Tab){
+        var i, tabs, tablinks;
+
+        tabs = document.getElementsByClassName("tab");
+        for (var i = 0; i < tabs.length; i++) {
+            tabs[i].classList.add("d-none");
+        }
+
+        tablinks = document.getElementsByClassName("tablink");
+        for (var i = 0; i < tablinks.length; i++) {
+            tablinks[i].classList.remove("mdi-checkbox-blank");
+            tablinks[i].classList.remove("mdi-checkbox-blank-outline");
+            tablinks[i].classList.add("mdi-checkbox-blank-outline");
+        }
+
+        document.getElementById(Tab).classList.remove("d-none");
+
+        document.getElementById(link).classList.remove("mdi-checkbox-blank-outline");
+        document.getElementById(link).classList.add("mdi-checkbox-blank");
+    }
+</script>
+<!-- End custom js for this page -->
+
+
+</body>
+
+</html>

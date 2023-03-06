@@ -1,0 +1,120 @@
+.btn-dark {
+	border: white 1px solid;
+}
+
+.btn-cncl {
+	border: red 1px solid;
+}
+
+.link-light {
+	color: white;
+}
+
+.card-body {
+	background-color: #000;
+}
+
+textarea {
+  background:#303030;
+/*  background:rgba(0,0,0,0.16);*/
+  box-shadow:0 1px 4px rgba(0, 0, 0, 0.3) inset, 0 1px rgba(255, 255, 255, 0.06);
+  border: 0 none;
+  border-radius: 3px;
+  color: #BBBBBB;
+  transition:background .2s;
+  resize: both;
+}
+
+.card {
+	background-color: #28282B;
+}
+
+.sign-up {
+    font-size: 0.875rem;
+    margin-top: 30px;
+    margin-bottom: 0;
+}
+
+/*something else*/
+/*p.input-container {
+	width: 100%;
+	position: relative;
+	top: 50px;
+	margin-bottom: 25px;
+}
+label {
+	color: #CCC;
+	position: absolute;
+	cursor: text;
+	transform: translateY(-25px);
+	transition: transform 0.3s ease;
+	left: 0;
+	bottom: -15px;
+}
+ input {
+	 width: 100%;
+	 height: 40px;
+	 font-size: 16px;
+	 transition: 0.6s;
+	 border: none;
+	 border-bottom: 1px solid #CCC;
+	 background-color: transparent;
+}
+ input:focus {
+	 outline: none;
+	 border-bottom: 1px solid #dbd8e3;
+}
+ .animation label {
+	 transform: translateY(-55px);
+	 font-size: 10px;
+	 text-transform: uppercase;
+	 font-weight: 600;
+}
+ .animation-color label {
+	 color: #dbd8e3;
+}
+
+.next-arrow {
+	 cursor: pointer;
+	 position: relative;
+	 display: block;
+	 margin: 100px 0 0 100px;
+	 width: 100px;
+	 height: 100px;
+	 border: solid 6px #999;
+	 border-radius: 100%;
+	 z-index: 1;
+	 transition: all 0.2s linear;
+}
+ .next-arrow:before, .next-arrow:after {
+	 content: "";
+	 position: absolute;
+	 width: 35%;
+	 height: 10%;
+	 top: 41%;
+	 left: 55%;
+	 background: #999;
+	 z-index: 2;
+	 transform: translate(-50%, -50%) rotate(45deg);
+	 transition: all 0.2s linear;
+}
+ .next-arrow:after {
+	 z-index: 3;
+	 top: 59%;
+	 left: 55%;
+	 transform: translate(-50%, -50%) rotate(-45deg);
+}
+ .next-arrow:hover {
+	 border: solid 8px #777;
+}
+ .next-arrow:hover:after, .next-arrow:hover:before {
+	 background: #777;
+}
+ .next-arrow:active {
+	 border: solid 8px #111;
+}
+ .next-arrow:active:after, .next-arrow:active:before {
+	 background: #111;
+}*/
+
+ 
